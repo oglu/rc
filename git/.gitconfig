@@ -1,0 +1,16 @@
+[user]
+    email = anastasios.vogiatzoglou@deliveryhero.com
+    name = Tasos Vogiatzoglou
+[push]
+	default = simple
+[core]
+	editor = vim
+	autocrlf = input
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+[filter "lfs"]
+	smudge = git-lfs smudge %f
+	required = true
+	clean = git-lfs clean %f
+[alias]
+    sync = pull --rebase upstream master

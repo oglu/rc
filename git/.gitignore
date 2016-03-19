@@ -1,0 +1,7 @@
+# we don't need those
+*.swp
+*.pyc
+*.git*
+*.p12
+*.pyc
+*.swp
