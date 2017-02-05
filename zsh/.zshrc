@@ -22,3 +22,6 @@ source $ZSH/oh-my-zsh.sh
 #aliases
 alias sdocker='sudo docker'
 
+if [[ $SSH_CONNECTION ]]; then
+    export PROMPT="[%{$bg[red]%}%{$fg[white]%}%m%{$reset_color%]]${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info) "
+fi

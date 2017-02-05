@@ -21,12 +21,13 @@ export NVM_DIR=${HOME}/.nvm
 UNAME=`uname`
 if [ "$UNAME" = "Darwin" ]; then
     export PATH=$PATH:/opt/local/bin
+    alias vim='/usr/local/Cellar/vim/7.4.2334/bin/vim'
 fi
 
-
-#aliases
-alias sdocker='sudo docker'
-alias vim='/usr/local/Cellar/vim/7.4.2334/bin/vim'
+if [ "$UNAME" = "Linux" ]; then
+    export GOROOT='/usr/local/go'
+    export PATH=$PATH:$GOROOT/bin
+fi
 
 
 if [[ $ZSH_NAME ]]; then
