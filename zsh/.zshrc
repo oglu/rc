@@ -22,4 +22,3 @@ source $ZSH/oh-my-zsh.sh
 #aliases
 alias sdocker='sudo docker'
 
-source .base_bash_profile

@@ -18,6 +18,9 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     rust
+     ansible
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -28,7 +31,8 @@ values."
      emacs-lisp
      erlang
      react
-     (colors :variables colors-enable-rainbow-identifiers t)
+     (colors :variables
+             colors-enable-rainbow-identifiers t)
      javascript
      typescript
      elixir
@@ -42,7 +46,7 @@ values."
      git
      dash
      markdown
-     eyebrowse
+     python
      org
      (shell :variables
       shell-default-shell 'eshell
@@ -52,7 +56,7 @@ values."
       shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     go
+     (go :variables go-use-gometalinter t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -113,8 +117,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Go Mono"
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -254,12 +258,23 @@ user code here.  The exception is org related code, which should be placed in
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (setq exec-path (append exec-path '("/usr/local/bin")))
+
   (add-hook 'alchemist-mode-hook 'company-mode)
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'objc-mode-hook 'irony-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
 
+  ;; --------------
+  ;; go-metalinter
+  ;; --------------
   (setq gofmt-command "goimports")
+  (setq flycheck-gometalinter-vendor t)
+  (setq flycheck-gometalinter-fast t)
+  (setq flycheck-gometalinter-disable-all t)
+  (setq flycheck-gometalinter-enable-linters '("golint" "deadcode" "gocyclo" "vet" "vetshadow" "errcheck"))
+
 
   ;;----------------------------------------------------------------------------
   ;; Webmode
@@ -270,33 +285,18 @@ layers configuration. You are free to put any user code."
    js2-basic-offset 2
    ;; web-mode
    css-indent-offset 2
-   web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2)
 
-  (with-eval-after-load 'web-mode
-    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
+  ;; -------------
+  ;; python venv
+  ;; -------------
+  (setq python-shell-virtualenv-path "~/envs/newstore")
 
 
-  (setq-default dotspacemacs-configuration-layers '(
-                                                    (colors :variables colors-enable-rainbow-identifiers t)))
 )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(paradox-github-token " 283dcaebef1b8da4784fd91c14f38e760fc6d7ba"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
