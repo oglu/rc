@@ -61,7 +61,13 @@ if [[ $BASH ]]; then
     fi
 
     PATH_TO_MONOREPO=/Users/oglu/projects/newstore
-    if [ -f "${PATH_TO_MONOREPO}/tools/environment.sh" ]; then
-          source "${PATH_TO_MONOREPO}/tools/environment.sh"
-      fi
+    if [ -f "$PATH_TO_MONOREPO/tools/environment.sh" ]; then
+          pushd $PATH_TO_MONOREPO
+          source "$PATH_TO_MONOREPO/tools/environment.sh"
+          popd
+    fi
 fi
+source /Users/oglu/projects/newstore/tools/local-env-instrumentation/aliases.sh
+
+# added by Anaconda3 5.0.1 installer
+export PATH="/Users/oglu/anaconda3/bin:$PATH"
